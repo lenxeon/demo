@@ -7,6 +7,13 @@
       <router-link to="/login">Login</router-link>
     </nav>
     <router-view/>
+    <div>
+      <ul>
+        <li>假定登陆页面不登陆就可以看</li>
+        <li>假定user页面只要登陆了就能看，登陆的人拥有最低权限user</li>
+        <li>假定admin页面需要有管理权限的人才能看到</li>
+      </ul>
+    </div>
   </div>
 </template>
 

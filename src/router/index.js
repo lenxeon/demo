@@ -47,9 +47,8 @@ const router = new VueRouter({
 })
 
 
-const canView = function(){
-  let flag = true;
-  return flag;
+const canView = function(user, auth){
+  return user && user.auth && user.auth.indexOf(auth) >= 0;
 }
 
 //注册一个用来拦截页面访问权限的
@@ -60,12 +59,13 @@ router.beforeResolve(async(to, from, next) => {
       //如果说这个页面不需要验证登陆
       next();
     } else{
+      let user = utils.checkLogin();
       if(to.meta.auth){
         //如果说这个跳转的路由需要权限
         try {
-          let result = await canView();
+          let result = await canView(user, to.meta.auth);
           if(result){
-            console.log('验证有没有权限', result);
+            console.log('验证有没有权限', user.auth, to.meta.auth, result);
             next();
           }
         } catch (error) {
@@ -80,7 +80,6 @@ router.beforeResolve(async(to, from, next) => {
       } else {
         //那看看有没有登陆，如果没有登陆直接跳到登陆上面
         console.log(utils.checkLogin);
-        let user = utils.checkLogin();
         if(user){
           next()
         } else{

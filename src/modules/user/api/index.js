@@ -8,7 +8,9 @@
     * 登陆
     */
    login(id, password) {
-    return $axios.get('/admin_login.json', {
+     console.log(id, password);
+    //模拟登陆不同的角色
+    return $axios.get(`/${id}_login.json`, {
       params: {
           id,
           password

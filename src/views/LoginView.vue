@@ -14,6 +14,7 @@
   </el-form>
 </template>
 <script>
+import { Table } from 'element-ui';
   export default {
     data() {
       return {
@@ -30,8 +31,8 @@
         let that = this;
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            console.log($API);
-            $API.user.login(that.id, that.password).then((resp)=>{
+            $API.user.login(that.ruleForm.id, that.ruleForm.password).then((resp)=>{
+              console.log('登陆成功', resp.data);
               localStorage.setItem('user', JSON.stringify(resp.data));//将登陆信息保存下来
             })
           } else {
@@ -42,6 +43,10 @@
       },
       resetForm(formName) {
         localStorage.clear();
+        this.$message({
+          message: '清除登陆信息',
+          type: 'success'
+        });
       }
     }
   }
